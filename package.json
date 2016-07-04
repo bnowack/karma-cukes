@@ -29,12 +29,11 @@
     "jquery": "*",
     "colors": "*"
   },
-  "readme": "# Karma Cukes\n\nKarma plugin for running Gherkin feature files through [Cucumber.js](https://github.com/cucumber/cucumber-js). \n\nFeatures:\n\n* [Cucumber JSON](https://www.relishapp.com/cucumber/cucumber/docs/formatters/json-output-formatter) reporter reporter\n* Built-in browser API for end-to-end testing\n",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bnowack/karma-cukes.git"
   },
   "scripts": {},
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
