@@ -1,0 +1,40 @@
+{
+  "author": {
+    "email": "mail@bnowack.de",
+    "name": "Benjamin Nowack"
+  },
+  "bugs": {
+    "url": "https://github.com/bnowack/karma-cukes/issues"
+  },
+  "dependencies": {},
+  "description": "Karma plugin for running Gherkin feature files against CucumberJS in end-to-end tests.",
+  "devDependencies": {},
+  "homepage": "https://github.com/bnowack/karma-cukes#readme",
+  "keywords": [
+    "karma",
+    "cucumber",
+    "cucumberjs",
+    "gherkin",
+    "karma-plugin",
+    "karma-framework",
+    "karma-reporter"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "name": "karma-cukes",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "karma": "^1.1.0",
+    "cucumber": "^1.2.0",
+    "jquery": "*",
+    "colors": "*"
+  },
+  "readme": "# Karma Cukes\n\nKarma plugin for running Gherkin feature files through [Cucumber.js](https://github.com/cucumber/cucumber-js). \n\nFeatures:\n\n* [Cucumber JSON](https://www.relishapp.com/cucumber/cucumber/docs/formatters/json-output-formatter) reporter reporter\n* Built-in browser API for end-to-end testing\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bnowack/karma-cukes.git"
+  },
+  "scripts": {},
+  "version": "0.1.0"
+}
