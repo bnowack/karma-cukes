@@ -93,7 +93,6 @@ var KarmaCukes = function () {
     this.getOptions = function() {
         var args = this.karma.config.args;
         var options = {};
-        return options;
         var argName = null;
         args.forEach(function(arg) {
             if (arg.match(/^--/)) {

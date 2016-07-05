@@ -119,8 +119,8 @@ style).
 ## Running features
 
     // all scenarios
-    $ ./node_modules/.bin/karma start path/to/karma.conf.js && exit 0
+    $ ./node_modules/.bin/karma start path/to/karma.conf.js
 
     // tagged scenarios
-    $ ./node_modules/.bin/karma start path/to/karma.conf.js --tags @ui && exit 0
+    $ ./node_modules/.bin/karma start path/to/karma.conf.js -- --tags @ui
 
