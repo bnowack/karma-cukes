@@ -211,6 +211,10 @@ KarmaCukesPrettyReporter = function (baseReporterDecorator, helper, config) {
         if (step.log.length) {
             this.writePadded(step.log.join("").bold.dim, 4, false, true);
         }
+        // error message
+        if (step.result.error_message) {
+            this.writePadded(step.result.error_message.red, 4, false, true);
+        }
     };
     
     /**
