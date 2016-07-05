@@ -1,30 +1,30 @@
 
 /**
- * Adds missing Error.captureStackTrace to browsers such as Firefox or PhantomJS
+ * Patches Error.captureStackTrace in browsers such as Firefox or PhantomJS
  * 
  * @param {Object} obj - Error object
  */
-Error.captureStackTrace = Error.captureStackTrace || function (obj) {
+Error.captureStackTrace = Error.captureStackTrace || function (error) {
     if (Error.prepareStackTrace) {
         var frame = {
             isEval: function () {
                 return false;
             },
             getFileName: function () {
-                return "filename";
+                return "unknown";
             },
             getLineNumber: function () {
-                return 1;
+                return 0;
             },
             getColumnNumber: function () {
-                return 1;
+                return 0;
             },
             getFunctionName: function () {
-                return "functionName";
+                return "unknown";
             }
         };
-        obj.stack = Error.prepareStackTrace(obj, [frame, frame, frame]);
+        error.stack = Error.prepareStackTrace(error, [frame, frame, frame]);
     } else {
-        obj.stack = obj.stack || obj.name || "Error";
+        error.stack = error.stack || error.name || "Error";
     }
 };

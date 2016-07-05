@@ -114,7 +114,7 @@ var KarmaCukesListener = function(karma) {
             line: step.getLine(),
             //hidden: step.isHidden(),
             match: { 
-                location: ""
+                location: step.getUri() + ':' + step.getLine()
             },
             result: {
                 status: null,
@@ -143,7 +143,7 @@ var KarmaCukesListener = function(karma) {
         };
         // match.location
         var stepDefinition = stepResult.getStepDefinition();
-        if (stepDefinition) {
+        if (stepDefinition && stepDefinition.getUri() !== 'unknown') {
             karmaResult.step.match.location = stepDefinition.getUri() + ':' + stepDefinition.getLine();
         }
         // result.status

@@ -54,8 +54,8 @@ style).
 * Only PhantomJS offers an API for [taking screenshots](http://stackoverflow.com/a/34695107)
   through Karma (AFAIK), while Webdriver provides this feature for all browsers.
 
-* The Karma Browser launchers are not fully standardized, e.g. PhantomJS and Firefox do not 
-  report step locations correctly (they are all set to "filename:1").
+* The Browser reports are not fully identical, e.g. PhantomJS and Firefox report step locations
+  correctly instead of step *definition* locations (due a patched `Error.captureStackTrace`).
 
 * There is only a minimal Browser API for visiting URLs and accessing a XHR object in end-to-end
   tests. The rest is native browser access and up to you.
