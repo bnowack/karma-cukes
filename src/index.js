@@ -2,7 +2,7 @@
 /* global __dirname */
 
 /**
- * Registers the Karma-Cukes plugin (`cukes`) and a JSON Reporter (`cukes-json`)
+ * Registers the Karma-Cukes plugin (`karma-cukes`) and reporters (`kc-json`, `kc-pretty`, `kc-progress`)
  * 
  * @author Benjamin Nowack <mail@bnowack.de>
  */
