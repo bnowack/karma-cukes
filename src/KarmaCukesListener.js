@@ -131,6 +131,10 @@ var KarmaCukesListener = function(karma) {
      */
     this.onStepResult = function(event) {
         var stepResult = event.getPayload();
+        // don't report hook results
+        if (this.isHook(stepResult.getStep())) {
+            return;
+        }
         var karmaResult = {
             feature: this.feature,
             scenario: this.scenario,
@@ -199,6 +203,16 @@ var KarmaCukesListener = function(karma) {
         var fullMessage = message + ' at ' + source.replace(/\?.*$/, '') + ':' + line + ':' + column;
         console.error(fullMessage);
         this.step.result.error_message += fullMessage + "\n";
+    };
+    
+    /**
+     * Checks if a step is a hook
+     * 
+     * @param {module:cucumber/step} step - Step object
+     * @returns {boolean} TRUE for hooks, FALSE otherwise
+     */
+    this.isHook = function(step) {
+        return step.getKeyword().match(/^(Before|After)/);
     };
     
 };
