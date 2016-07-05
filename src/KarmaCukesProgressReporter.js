@@ -26,9 +26,6 @@ KarmaCukesProgressReporter = function (baseReporterDecorator, helper) {
      * Initializes the reporter
      */
     this.init = function () {
-        // configure base reporter
-        this.USE_COLORS = true;
-        
         // init helper variables
         this.outputLength = 0;
         this.stats = {};// 1 entry per scenario with passed/skipped/failed-counters and a summary prop

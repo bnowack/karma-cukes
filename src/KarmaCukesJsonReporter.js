@@ -22,9 +22,6 @@ KarmaCukesJsonReporter = function (baseReporterDecorator, logger, helper, config
      * Initializes the reporter
      */
     this.init = function () {
-        // configure base reporter
-        this.USE_COLORS = true;
-        
         // create a custom logger
         this.logger = logger.create('reporter:karma-cukes-json');
         

@@ -37,7 +37,6 @@ KarmaCukesPrettyReporter = function (baseReporterDecorator, helper, config) {
     this.init = function () {
         var self = this;
         // configure base reporter
-        this.USE_COLORS = true;
         this.adapters = [ function (msg) { self.bufferStdOut(msg); } ];
         
         // init helper variables
