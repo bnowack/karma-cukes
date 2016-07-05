@@ -24,8 +24,8 @@
   "name": "karma-cukes",
   "optionalDependencies": {},
   "peerDependencies": {
-    "karma": "1.*",
-    "cucumber": "^1.2.0",
+    "karma": "*",
+    "cucumber": "1.*",
     "jquery": "*",
     "colors": "*"
   },
