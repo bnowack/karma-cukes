@@ -35,5 +35,5 @@
     "url": "git+https://github.com/bnowack/karma-cukes.git"
   },
   "scripts": {},
-  "version": "0.1.3"
+  "version": "1.0.0"
 }
