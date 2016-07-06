@@ -6,7 +6,24 @@
 
 function World() {
 
+    // minimalistic assertion utils
+    this.assert = {
         
+        ok: function (condition, callback, message) {
+            if (condition) {
+                callback();
+            } else {
+                callback(new Error(message || 'should meet condition'));
+            }
+        },
+        
+        equal: function (actual, expected, callback, message) {
+            return this.ok(actual === expected, callback, message || 'should be equal');
+        },
+        
+        contain: function (haystack, needle, callback, message) {
+            return this.ok(haystack.indexOf(needle) !== -1, callback, message || 'should contain ' + JSON.stringify(actual));
+        }
         
     };
     
