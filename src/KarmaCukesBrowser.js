@@ -1,6 +1,7 @@
 /**
  * Browser interface for end-to-end tests using Karma
  * 
+ * @author Benjamin Nowack <mail@bnowack.de>
  * @returns {KarmaCukesBrowser}
  */
 var KarmaCukesBrowser = function() {
@@ -9,24 +10,43 @@ var KarmaCukesBrowser = function() {
      * Initializes a browser instance
      * 
      * @constructor
-     * @returns {undefined}
      */
     this.init = function() {
-        this.xhr = null;
-        this.response = null;
-        this.statusCode = null;
-        this.window = $('<iframe></iframe>').css({width: 1200, height: 900}).appendTo('body');
-        this.document = null;
+        this.frame = null;
+        this.window = null;
+        this.instanceId = Math.random();
     };
     
+    /**
+     * Opens the path in an iframe
+     * 
+     * @param {string} path - Path or CORS-enabled URL
+     * @param {function} callback - CucumberJS callback
+     */
     this.visit = function(path, callback) {
         var self = this;
-        var url = path.match(/:\/\//) ? path : this.baseUrl + path;
-        url = path;
-        $(self.window).one('load', function() {
+        if (!this.frame) {
+            this.frame = $('<iframe></iframe>')
+                .css({position: 'fixed', top: 0, left: 0, right: 0, bottom: 0})
+                .appendTo('body')
+            ;
+        }
+        this.frame.one('load', function() {
+            self.window = self.frame.prop('contentWindow');
             callback();
         });
-        self.window.attr('src', url);
+        this.frame.attr('src', path);
+    };
+    
+    /**
+     * Cleans up
+     */
+    this.close = function() {
+        if (this.frame) {
+            this.frame.remove();
+            this.frame = null;
+            this.window = null;
+        }
     };
     
     // init browser
