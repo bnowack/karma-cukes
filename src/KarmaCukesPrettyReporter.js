@@ -276,7 +276,8 @@ KarmaCukesPrettyReporter = function (baseReporterDecorator, helper, config) {
     this.getSourceString = function(source) {
         return source
             ? ' # ' + source
-                .replace(new RegExp('^.*' + config.urlRoot + '(base|absolute)/'), '/') // remove leading path noise
+                .replace(new RegExp('^.*' + config.urlRoot + 'base/'), '') // remove leading path noise
+                .replace(new RegExp('^.*' + config.urlRoot + 'absolute/'), '/') // remove leading path noise
                 .replace(/\?[^\:]+/, '') // remove query string
             : ''
         ;

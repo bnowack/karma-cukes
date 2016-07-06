@@ -69,7 +69,7 @@ var KarmaCukesListener = function(karma) {
         var feature = event.getPayload();
         this.feature = {
             id: feature.getName().toLowerCase().replace(/\s+/g, '-'),
-            uri: feature.getUri(),
+            uri: feature.getUri().replace(/^(.*\/(base)\/)/, ''), // remove leading path noise
             name: feature.getName(),
             description: feature.getDescription(),
             line: feature.getLine(),
@@ -150,6 +150,11 @@ var KarmaCukesListener = function(karma) {
         if (stepDefinition && stepDefinition.getUri() !== 'unknown') {
             karmaResult.step.match.location = stepDefinition.getUri() + ':' + stepDefinition.getLine();
         }
+        karmaResult.step.match.location = karmaResult.step.match.location
+            .replace(/^(.*\/(base)\/)/, '') // remove leading path noise
+            .replace(/^(.*\/(absolute)\/)/, '/') // remove leading path noise
+            .replace(/\?[^\:]+/g, '') // remove query strings
+        ;
         // result.status
         karmaResult.step.result.status = stepResult.getStatus();
         // result.duration
@@ -158,7 +163,13 @@ var KarmaCukesListener = function(karma) {
         if (karmaResult.step.result.status === 'failed') {
             var failureException = stepResult.getFailureException();
             if (failureException) {
-                karmaResult.step.result.error_message += (failureException.stack || failureException);
+                karmaResult.step.result.error_message += (failureException.stack || failureException)
+                    .replace(/^(.*\/(base)\/)/gm, '') // remove leading path noise
+                    .replace(/^(.*\/(absolute)\/)/gm, '/') // remove leading path noise
+                    .replace(/^(.*\/release\/cucumber.js.*$)/gm, '') // cucumberjs entries
+                    .replace(/\?[^\:]+/g, '') // remove query strings
+                    .replace(/\n*$/, '') // remove trailing line-breaks
+                ;
             }
         }
         // attachments 
