@@ -26,6 +26,7 @@ var KarmaCukesPlugin = function(files, config) {
         { pattern: __dirname + "/KarmaCukesBrowser.js", included: true, served: true },
         { pattern: __dirname + "/KarmaCukesListener.js", included: true, served: true },
         { pattern: __dirname + "/KarmaCukesWorld.js", included: true, served: true },
+        { pattern: __dirname + "/KarmaCukesStepDefinitions.js", included: true, served: true },
         { pattern: __dirname + "/KarmaCukes.js", included: true, served: true }
     );
 };
