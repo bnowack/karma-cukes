@@ -26,8 +26,7 @@
   "peerDependencies": {
     "karma": "*",
     "cucumber": "1.*",
-    "jquery": "*",
-    "colors": "*"
+    "jquery": "*"
   },
   "readmeFilename": "README.md",
   "repository": {
@@ -35,5 +34,5 @@
     "url": "git+https://github.com/bnowack/karma-cukes.git"
   },
   "scripts": {},
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

@@ -27,16 +27,16 @@ unified set of tools.
 
 #### Selenium/Webdriver with built-in CucumberJS framework
 
-While Webdriver (Selenium) offers near-out-of-the-box support for Cucumber, the generated reports 
+While Webdriver (Selenium) offers near out-of-the-box support for Cucumber, the generated reports 
 lack the level of detail that "native" Cucumber provides. They don't allow to auto-generate
 living documentation from report files (e.g. feature descriptions are missing and both feature and
 scenario names get normalized to underscored identifiers).
 
 #### Other Karma-CucumberJS adapters
 
-They basically have the same issues as Webdriver-Cucumber. There are [good jUnit-reporters](https://www.npmjs.com/package/karma-junit-reporter)
+They basically have the same issues as Webdriver-Cucumber. There are good [jUnit-reporters](https://www.npmjs.com/package/karma-junit-reporter)
 but I could not find proper "Progress", "Pretty", or "JSON" formatters that behave like the ones a Cucumber (or Behat in my case) developer is 
-used to.
+used to. The ones I tested also did not work with PhantomJS and Firefox.
 
 ### Solution
 
@@ -57,8 +57,8 @@ the plugin, but here we are ;-)
 * The Browser reports are not fully identical, e.g. PhantomJS and Firefox report step locations
   instead of step *definition* locations (due a patched `Error.captureStackTrace`).
 
-* There is only a minimal Browser API for visiting URLs and accessing a XHR object in end-to-end
-  tests. The rest is native browser access and up to you (which I personally think is actually an advantage).
+* There is only a minimal Browser API for visiting URLs in end-to-end tests. 
+  The rest is native browser access and up to you (which I personally think is actually an advantage).
 
 * No access to response headers (except for AJAX-based requests), 
   but could be doable via [Service Workers](https://github.com/gmetais/sw-get-headers)
@@ -71,7 +71,7 @@ the plugin, but here we are ;-)
 
     npm install karma-cukes --save-dev
 
-(Peer dependencies: `jquery`, `cucumber`, and `colors`. The latter comes with cucumber)
+Peer dependencies: `jquery` (any version), `cucumber` (1.*), and of course `karma` (any version)
 
 ## Configuration (karma.conf.js)
 
@@ -126,7 +126,7 @@ the plugin, but here we are ;-)
 
 ## Assertion utils
 
-For very basic operations, Karma-Cukes has 3 built-in assertion methods that are available in step definitions.
+Karma-Cukes comes with 3 (basic) assertion methods that are accessible from step definitions.
 
 * `this.assert.ok(condition, callback, message)`
 * `this.assert.equal(actual, expected, callback, message)`
@@ -139,7 +139,7 @@ The World context provides a basic browser interface for loading local (proxied)
     var world = this;
     var path = "/my/path";
     this.visit(path, function() {               // shortcut for `this.browser.visit(path, callback)`
-        var window = world.browser.window;      // native browser window (an iframe window)
+        var window = world.browser.window;      // native browser window (an iframe)
         var document = window.document;         // native browser document object
         var $title = $(document).find('title'); // just use jQuery from here on
     });
@@ -148,12 +148,17 @@ The World context provides a basic browser interface for loading local (proxied)
 
 Karma-Cukes provides basic step definitions to get you started:
 
-* `I go to "$path"` - Calls `browser.visit`.
-    e.g. `When I go to /test`
-* `I should see "$html" in the $element` - Calls `assert.contain`. `$element` can be a tag name or a CSS selector
-    e.g. `Then I should see "Hello" in the body`
-* `the $element should be "$expected"` - Calls `assert.equal`. `$element` can be a tag name or a CSS selector
-    e.g. `And the title should be "Hello World"`
+* `I go to "$path"`
+    * Calls `browser.visit`
+    * Example: `When I go to "/test"`
+* `I should see "$html" in the $element`
+    * Calls `assert.contain`
+    * `$element` can be a tag name or a CSS selector
+    * Example: `Then I should see "Hello" in the body`
+* `the $element should be "$expected"`
+    * Calls `assert.equal`
+    * `$element` can be a tag name or a CSS selector
+    * Example: `And the title should be "Hello World"`
 
 ## Reporter Screenshots
 
@@ -221,3 +226,6 @@ Karma-Cukes has 3 built-in reporters:
         ...
         ]
 
+## License
+
+[The MIT License (MIT)](LICENSE) / Copyright 2016 Benjamin Nowack
