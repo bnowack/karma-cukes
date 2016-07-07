@@ -6,7 +6,9 @@
   "bugs": {
     "url": "https://github.com/bnowack/karma-cukes/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "colors": "*"      
+  },
   "description": "Karma plugin for running Gherkin feature files against CucumberJS in end-to-end tests.",
   "devDependencies": {},
   "homepage": "https://github.com/bnowack/karma-cukes#readme",
