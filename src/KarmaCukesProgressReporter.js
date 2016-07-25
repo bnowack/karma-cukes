@@ -52,6 +52,8 @@ KarmaCukesProgressReporter = function (baseReporterDecorator, helper) {
     this.onRunComplete = function () {
         this.endTime = (new Date()).getTime();
         this.reportStats();
+        // reset cache and stats
+        this.init();
     };
     
     /**

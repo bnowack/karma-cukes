@@ -70,9 +70,11 @@ KarmaCukesJsonReporter = function (baseReporterDecorator, logger, helper, config
         var reporterConfig = config.kcJsonReporter || {};
         var fileName = reporterConfig.outputFile || null;
         if (fileName) {
-            this.writeReport(browser);
+            this.writeReport(browser, this.init);
         } else {
             this.logReport();
+            // reset cache and stats
+            this.init();
         }
     };
 
@@ -92,7 +94,7 @@ KarmaCukesJsonReporter = function (baseReporterDecorator, logger, helper, config
      * 
      * @param {module:karma/browser} browser - Browser object
      */
-    this.writeReport = function (browser) {
+    this.writeReport = function (browser, callback) {
         var self = this;
         var reporterConfig = config.kcJsonReporter || {};
         // create filename
@@ -118,6 +120,7 @@ KarmaCukesJsonReporter = function (baseReporterDecorator, logger, helper, config
                 } else {
                     self.logger.debug('JSON report written to "%s".', fullPath);
                 }
+                callback.call(self);
             });
         });
     };
