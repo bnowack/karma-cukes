@@ -15,6 +15,7 @@ var KarmaCukesBrowser = function() {
         this.frame = null;
         this.window = null;
         this.instanceId = Math.random();
+        this.base = '';
     };
     
     /**
@@ -46,7 +47,7 @@ var KarmaCukesBrowser = function() {
                 resolve();
             });
             // trigger load
-            self.frame.attr('src', path);
+            self.frame.attr('src', self.base + path);
         });
     };
     
