@@ -1,15 +1,15 @@
 /* globals $ */
 /**
  * Browser interface for end-to-end tests using Karma
- * 
+ *
  * @author Benjamin Nowack <mail@bnowack.de>
  * @returns {KarmaCukesBrowser}
  */
 var KarmaCukesBrowser = function() {
-    
+
     /**
      * Initializes a browser instance
-     * 
+     *
      * @constructor
      */
     this.init = function() {
@@ -18,10 +18,10 @@ var KarmaCukesBrowser = function() {
         this.instanceId = Math.random();
         this.base = '';
     };
-    
+
     /**
      * Opens the path in an iframe
-     * 
+     *
      * @param {string} path - Path or CORS-enabled URL
      * @returns {Promise}
      */
@@ -52,7 +52,7 @@ var KarmaCukesBrowser = function() {
             self.frame.attr('src', self.base + path);
         });
     };
-    
+
     /**
      * Cleans up
      */
@@ -64,8 +64,8 @@ var KarmaCukesBrowser = function() {
             this.document = null;
         }
     };
-    
+
     // init browser
     this.init.apply(this, arguments);
-    
+
 };

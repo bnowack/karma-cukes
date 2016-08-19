@@ -5,7 +5,7 @@
  */
 
 module.exports = function() {
-    
+
     this.When('I go to "$path"', function (path, callback) {
         this
             .visit(path)
