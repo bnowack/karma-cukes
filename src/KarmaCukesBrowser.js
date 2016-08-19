@@ -21,21 +21,33 @@ var KarmaCukesBrowser = function() {
      * Opens the path in an iframe
      * 
      * @param {string} path - Path or CORS-enabled URL
-     * @param {function} callback - CucumberJS callback
+     * @returns {Promise}
      */
-    this.visit = function(path, callback) {
+    this.visit = function(path) {
         var self = this;
-        if (!this.frame) {
-            this.frame = $('<iframe></iframe>')
-                .css({position: 'fixed', top: 0, left: 0, right: 0, bottom: 0})
-                .appendTo('body')
-            ;
-        }
-        this.frame.one('load', function() {
-            self.window = self.frame.prop('contentWindow');
-            callback();
+        return new Promise(function (resolve) {
+            // add frame
+            if (!self.frame) {
+                self.frame = $('<iframe></iframe>')
+                    .css({
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height:'100%',
+                        border: 'none'
+                    })
+                    .appendTo('body')
+                ;
+            }
+            // handle load
+            self.frame.one('load', function() {
+                self.window = self.frame.prop('contentWindow');
+                resolve();
+            });
+            // trigger load
+            self.frame.attr('src', path);
         });
-        this.frame.attr('src', path);
     };
     
     /**

@@ -34,10 +34,10 @@ function World() {
      * Shortcut for browser.visit
      * 
      * @param {string} path - URL or local path
-     * @param {function} callback - Cucumber runner callback
+     * @returns {Promise}
      */
-    this.visit = function(path, callback) {
-        this.browser.visit(path, callback);
+    this.visit = function(path) {
+        return this.browser.visit(path);
     };
 
 }
