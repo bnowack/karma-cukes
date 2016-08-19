@@ -44,6 +44,7 @@ var KarmaCukesBrowser = function() {
             // handle load
             self.frame.one('load', function() {
                 self.window = self.frame.prop('contentWindow');
+                self.document = self.window.document;
                 resolve();
             });
             // trigger load
@@ -59,6 +60,7 @@ var KarmaCukesBrowser = function() {
             this.frame.remove();
             this.frame = null;
             this.window = null;
+            this.document = null;
         }
     };
     
