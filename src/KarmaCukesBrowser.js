@@ -1,3 +1,4 @@
+/* globals $ */
 /**
  * Browser interface for end-to-end tests using Karma
  * 
