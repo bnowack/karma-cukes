@@ -20,7 +20,7 @@ var KarmaCukesBrowser = function() {
     };
 
     /**
-     * Adds the browser iframe and registers load handler
+     * Adds the browser iframe and registers a load handler
      */
     this.initFrame = function () {
         var self = this;
@@ -44,7 +44,7 @@ var KarmaCukesBrowser = function() {
     }
 
     /**
-     * Opens the path in an iframe
+     * Opens the given URL or path in the iframe
      *
      * @param {string} path - Path or CORS-enabled URL
      * @returns {Promise}
