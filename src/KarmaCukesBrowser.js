@@ -15,7 +15,6 @@ var KarmaCukesBrowser = function() {
     this.init = function() {
         this.frame = null;
         this.window = null;
-        this.instanceId = Math.random();
         this.base = '';
         this.initFrame();
     };
