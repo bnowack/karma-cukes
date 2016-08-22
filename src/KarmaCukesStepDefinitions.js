@@ -7,7 +7,7 @@
 module.exports = function() {
 
     this.When('I go to "$path"', function (path, callback) {
-        this.browser.visit(path).then(callback);
+        this.browser.url(path).then(callback);
     });
 
     this.Then('I should see "$html" in the $element', function (html, element, callback) {

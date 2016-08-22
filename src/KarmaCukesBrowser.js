@@ -49,7 +49,7 @@ var KarmaCukesBrowser = function() {
      * @param {string} path - Path or CORS-enabled URL
      * @returns {Promise}
      */
-    this.visit = function (path) {
+    this.url = function (path) {
         var self = this;
         return new Promise(function (resolve) {
             // handle load
