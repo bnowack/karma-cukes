@@ -12,7 +12,7 @@ var KarmaCukesBrowser = function() {
      *
      * @constructor
      */
-    this.init = function() {
+    this.init = function () {
         this.frame = null;
         this.window = null;
         this.base = '';
@@ -49,7 +49,7 @@ var KarmaCukesBrowser = function() {
      * @param {string} path - Path or CORS-enabled URL
      * @returns {Promise}
      */
-    this.visit = function(path) {
+    this.visit = function (path) {
         var self = this;
         return new Promise(function (resolve) {
             // handle load
@@ -97,7 +97,7 @@ var KarmaCukesBrowser = function() {
     /**
      * Cleans up
      */
-    this.close = function() {
+    this.close = function () {
         if (this.frame) {
             this.frame.remove();
             this.frame = null;
