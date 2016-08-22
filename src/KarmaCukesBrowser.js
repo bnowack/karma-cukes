@@ -63,6 +63,39 @@ var KarmaCukesBrowser = function() {
     };
 
     /**
+     * Waits until a CSS selector matches
+     *
+     * @param selector - CSS selector
+     * @param maxWaitTime - How long to wait for the selector to appear, default: 5 seconds
+     * @returns {Promise}
+     */
+    this.waitFor = function(selector, maxWaitTime) {
+        var self = this;
+        var resolved = function (resolve) {
+            if ($(self.document).find(selector).length) {
+                resolve();
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return new Promise(function (resolve, reject) {
+            if (!resolved(resolve)) {
+                var start = (new Date()).getTime();
+                maxWaitTime = maxWaitTime || 5000;
+                var interval = setInterval(function () {
+                    if (resolved(resolve)) {
+                        clearInterval(interval);
+                    } else if ((new Date()).getTime() - start >= maxWaitTime) {
+                        clearInterval(interval);
+                        reject();
+                    }
+                }, 100);
+            }
+        });
+    };
+
+    /**
      * Cleans up
      */
     this.close = function() {
