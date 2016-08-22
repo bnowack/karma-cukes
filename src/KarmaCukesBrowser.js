@@ -71,8 +71,9 @@ var KarmaCukesBrowser = function() {
     this.waitFor = function(selector, maxWaitTime) {
         var self = this;
         var resolved = function (resolve) {
-            if ($(self.document).find(selector).length) {
-                resolve();
+            var matches = $(self.document).find(selector);
+            if (matches.length) {
+                resolve(matches);
                 return true;
             } else {
                 return false;
