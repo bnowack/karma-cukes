@@ -17,7 +17,32 @@ var KarmaCukesBrowser = function() {
         this.window = null;
         this.instanceId = Math.random();
         this.base = '';
+        this.initFrame();
     };
+
+    /**
+     * Adds the browser iframe and registers load handler
+     */
+    this.initFrame = function () {
+        var self = this;
+        this.frame = $('<iframe></iframe>')
+            .css({
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height:'100%',
+                border: 'none'
+            })
+            .appendTo('body')
+        ;
+        // handle load
+        this.frame.on('load', function() {
+            self.window = self.frame.prop('contentWindow');
+            self.document = self.window.document;
+            self.frame.trigger('loaded');
+        });
+    }
 
     /**
      * Opens the path in an iframe
@@ -28,24 +53,8 @@ var KarmaCukesBrowser = function() {
     this.visit = function(path) {
         var self = this;
         return new Promise(function (resolve) {
-            // add frame
-            if (!self.frame) {
-                self.frame = $('<iframe></iframe>')
-                    .css({
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height:'100%',
-                        border: 'none'
-                    })
-                    .appendTo('body')
-                ;
-            }
             // handle load
-            self.frame.one('load', function() {
-                self.window = self.frame.prop('contentWindow');
-                self.document = self.window.document;
+            self.frame.one('loaded', function() {
                 resolve();
             });
             // trigger load
