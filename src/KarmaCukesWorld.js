@@ -30,16 +30,6 @@ function World() {
     // init browser object
     this.browser = new KarmaCukesBrowser();
 
-    /**
-     * Shortcut for browser.visit
-     * 
-     * @param {string} path - URL or local path
-     * @returns {Promise}
-     */
-    this.visit = function(path) {
-        return this.browser.visit(path);
-    };
-
 }
 
 module.exports = function() {
