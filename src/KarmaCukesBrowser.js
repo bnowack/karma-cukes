@@ -71,7 +71,7 @@ var KarmaCukesBrowser = function() {
      * @param method -  HTTP method, e.g. GET
      * @returns {Promise}
      */
-    this.http = function (url, method) {
+    this.http = function (url, method, data) {
         var self = this;
         if (!url.match(/\/\//)) {
             url = this.base + url;
@@ -80,6 +80,7 @@ var KarmaCukesBrowser = function() {
             $.ajax({
                 url: url,
                 method: method || 'GET',
+                data: data || null,
                 dataType: 'text',
                 success: resolve,
                 error: reject
