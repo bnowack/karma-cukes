@@ -62,6 +62,29 @@ var KarmaCukesBrowser = function() {
     };
 
     /**
+     * Issues an HTTP request and returns the response
+     *
+     * @param {string} url - Path or CORS-enabled URL
+     * @param method -  HTTP method, e.g. GET
+     * @returns {Promise}
+     */
+    this.http = function (url, method) {
+        var self = this;
+        if (!url.match(/\/\//)) {
+            url = this.base + url;
+        }
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                method: method || 'GET',
+                dataType: 'text',
+                success: resolve,
+                error: reject
+            });
+        });
+    };
+
+    /**
      * Waits until a CSS selector matches
      *
      * @param selector - CSS selector
