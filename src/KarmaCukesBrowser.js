@@ -46,18 +46,21 @@ var KarmaCukesBrowser = function() {
     /**
      * Opens the given URL or path in the iframe
      *
-     * @param {string} path - Path or CORS-enabled URL
+     * @param {string} url - Path or CORS-enabled URL
      * @returns {Promise}
      */
-    this.url = function (path) {
+    this.url = function (url) {
         var self = this;
+        if (!url.match(/\/\//)) {
+            url = this.base + url;
+        }
         return new Promise(function (resolve) {
             // handle load
             self.frame.one('loaded', function() {
                 resolve();
             });
             // trigger load
-            self.frame.attr('src', self.base + path);
+            self.frame.attr('src', url);
         });
     };
 
