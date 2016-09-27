@@ -162,15 +162,21 @@ var KarmaCukesListener = function(karma) {
         // error message
         if (karmaResult.step.result.status === 'failed') {
             var failureException = stepResult.getFailureException();
-            if (failureException) {
-                karmaResult.step.result.error_message += (failureException.stack || failureException)
-                    .replace(/^(.*\/(base)\/)/gm, '') // remove leading path noise
-                    .replace(/^(.*\/(absolute)\/)/gm, '/') // remove leading path noise
-                    .replace(/^(.*\/release\/cucumber.js.*$)/gm, '') // cucumberjs entries
-                    .replace(/\?[^\:]+/g, '') // remove query strings
-                    .replace(/\n*$/, '') // remove trailing line-breaks
-                ;
+            var stack = '';
+            if (failureException && typeof failureException.stack === 'string') {
+                stack = failureException.stack;
+            } else if (failureException && failureException.message && failureException instanceof Error) {
+                stack = failureException.message;
+            } else if (failureException && typeof failureException === 'string') {
+                stack = failureException;
             }
+            karmaResult.step.result.error_message += stack
+                .replace(/^(.*\/(base)\/)/gm, '') // remove leading path noise
+                .replace(/^(.*\/(absolute)\/)/gm, '/') // remove leading path noise
+                .replace(/^(.*\/release\/cucumber.js.*$)/gm, '') // cucumberjs entries
+                .replace(/\?[^\:]+/g, '') // remove query strings
+                .replace(/\n*$/, '') // remove trailing line-breaks
+            ;
         }
         // attachments
         var attachments = stepResult.getAttachments();
