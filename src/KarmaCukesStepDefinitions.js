@@ -22,8 +22,4 @@ module.exports = function() {
         this.assert.equal(actual, expected, callback, actual + ' should be ' + expected);
     });
 
-    this.After(function () {
-        this.browser.close();
-    });
-
 };
