@@ -42,7 +42,7 @@ var KarmaCukesBrowser = function() {
             self.document = self.window.document;
             self.frame.trigger('loaded');
         });
-    }
+    };
 
     /**
      * Opens the given URL or path in the iframe
@@ -69,7 +69,8 @@ var KarmaCukesBrowser = function() {
      * Issues an HTTP request and returns the response
      *
      * @param {string} url - Path or CORS-enabled URL
-     * @param method -  HTTP method, e.g. GET
+     * @param {string} method -  HTTP method, e.g. GET
+     * @param {Object} data -  Request data
      * @returns {Promise}
      */
     this.http = function (url, method, data) {
@@ -106,7 +107,7 @@ var KarmaCukesBrowser = function() {
             } else {
                 return false;
             }
-        }
+        };
         return new Promise(function (resolve, reject) {
             if (!resolved(resolve)) {
                 var start = (new Date()).getTime();
