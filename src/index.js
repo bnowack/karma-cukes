@@ -3,7 +3,7 @@
 
 /**
  * Registers the Karma-Cukes plugin (`karma-cukes`) and reporters (`kc-json`, `kc-pretty`, `kc-progress`)
- * 
+ *
  * @author Benjamin Nowack <mail@bnowack.de>
  */
 "use strict";
@@ -16,6 +16,7 @@ var KarmaCukesProgressReporter = require('./KarmaCukesProgressReporter');
 var KarmaCukesPlugin = function(files, config) {
     // inject client-side plugin dependencies
     files.unshift(
+        { pattern: path.dirname(require.resolve('babel-polyfill')) + '/../dist/polyfill.min.js', included: true, served: true },
         { pattern: path.dirname(require.resolve('jquery')) + '/jquery.min.js', included: true, served: true },
         { pattern: path.dirname(require.resolve('cucumber')) + '/../release/cucumber.js', included: true, served: true },
         { pattern: __dirname + "/error-patch.js", included: true, served: true },

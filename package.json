@@ -7,7 +7,8 @@
     "url": "https://github.com/bnowack/karma-cukes/issues"
   },
   "dependencies": {
-    "colors": "*"      
+    "colors": "*",
+    "babel-polyfill": "^6.13.0"
   },
   "description": "Karma plugin for running Gherkin feature files against CucumberJS in end-to-end tests.",
   "devDependencies": {},
