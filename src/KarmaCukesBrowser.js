@@ -5,7 +5,7 @@
  * @author Benjamin Nowack <mail@bnowack.de>
  * @returns {KarmaCukesBrowser}
  */
-var KarmaCukesBrowser = function() {
+var KarmaCukesBrowser = function () {
 
     /**
      * Initializes a browser instance
@@ -31,13 +31,13 @@ var KarmaCukesBrowser = function() {
                 top: 0,
                 left: 0,
                 width: '100%',
-                height:'100%',
+                height: '100%',
                 border: 'none'
             })
             .appendTo('body')
         ;
         // handle load
-        this.frame.on('load', function() {
+        this.frame.on('load', function () {
             self.window = self.frame.prop('contentWindow');
             self.document = self.window.document;
             self.frame.trigger('loaded');
@@ -57,7 +57,7 @@ var KarmaCukesBrowser = function() {
         }
         return new Promise(function (resolve) {
             // handle load
-            self.frame.one('loaded', function() {
+            self.frame.one('loaded', function () {
                 resolve();
             });
             // trigger load
@@ -97,7 +97,7 @@ var KarmaCukesBrowser = function() {
      * @param maxWaitTime - How long to wait for the selector to appear, default: 5 seconds
      * @returns {Promise}
      */
-    this.waitFor = function(selector, maxWaitTime) {
+    this.waitFor = function (selector, maxWaitTime) {
         var self = this;
         var resolved = function (resolve) {
             var matches = $(self.document).find(selector);
