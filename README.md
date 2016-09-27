@@ -177,14 +177,14 @@ Karma-Cukes provides basic step definitions to get you started:
 * `I go to "$path"`
     * Calls `browser.url`
     * Example: `When I go to "/test"`
-* `I should see "$html" in the $element`
+* `I should see "$html" in the "$element" element`
     * Calls `assert.contain`
     * `$element` can be a tag name or a CSS selector
-    * Example: `Then I should see "Hello" in the body`
-* `the $element should be "$expected"`
+    * Example: `Then I should see "Hello" in the "body" element`
+* `the "$element" element should be "$expected"`
     * Calls `assert.equal`
     * `$element` can be a tag name or a CSS selector
-    * Example: `And the title should be "Hello World"`
+    * Example: `And the "title" element should be "Hello World"`
 
 ## Formatters
 
