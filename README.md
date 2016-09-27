@@ -82,25 +82,26 @@ Peer dependencies: `jquery` (any version), `cucumber` (1.*), and of course `karm
 
         // specify feature files and support code
         files: [
-            { pattern: 'dev/**/*.feature', included: false },
-            'dev/**/step-definitions.js',
-            'dev/**/hooks.js'
+            { pattern: 'dev/**/*.feature', included: false, watched: true, served: true },
+            { pattern: 'dev/**/hooks.js', included: true, watched: true, served: true },
+            { pattern: 'dev/**/step-definitions.js', included: true, watched: true, served: true }
         ],
 
         // forward command line arguments to CucumberJS
         client: {
             args: process.argv.slice(4),
+            captureConsole: true
         },
 
         // activate reporters (kc-progress, kc-pretty, and/or kc-json)
         reporters: ['kc-pretty', 'kc-json'],
-        
+
         // configure the JSON formatter
         kcJsonReporter: {
             outputDir: 'dev/reports/behaviour',
             outputFile: 'karma-cukes-{shortBrowserName}.json' // supported placeholders: `shortBrowserName`, `browserName`
         },
-        
+
         // enable colors in the output
         colors: true,
 
@@ -134,22 +135,47 @@ Karma-Cukes comes with 3 (basic) assertion methods that are accessible from step
 
 ## Using the Browser object
 
-The World context provides a basic browser interface for loading local (proxied) paths or CORS-enabled URIs:
+The World context provides a Promise-based browser interface for loading local (proxied) paths or CORS-enabled URIs:
 
     var world = this;
-    var path = "/my/path";
-    this.visit(path, function() {               // shortcut for `this.browser.visit(path, callback)`
-        var window = world.browser.window;      // native browser window (an iframe)
-        var document = window.document;         // native browser document object
-        var $title = $(document).find('title'); // just use jQuery from here on
-    });
+    this.browser
+        .url('/my/path')
+        .then(function () {
+            var window = world.browser.window;      // native browser window (an iframe)
+            var document = world.browser.document;  // native browser document object
+            var $title = $(document).find('title'); // just use jQuery from here on
+            var pageContent = $(document).text();
+            ...
+        })
+        // wait for an element to appear
+        .then (function() {
+            var $form = $(world.browser.document).find('#my-form');
+            $form
+                .find('input#search').val('cucumber').end()
+                .find('button[type="submit"]').click();
+            ;
+            return world.browser.waitFor('#search-results');
+        });
+
+AJAX requests can be issued as well:
+
+    var world = this;
+    this.browser
+        .http('my/api', 'GET', { search: 'cucumber' })
+        .then(function(response) {
+            var $xhr = world.browser.$ajax;
+            if ($ajax.status === 200 && $ajax.getResponseHeader('Content-Type').match(/application\/json/)) {
+                return JSON.parse(response);
+            }
+        })
+        
 
 ## Built-in Step Definitions
 
 Karma-Cukes provides basic step definitions to get you started:
 
 * `I go to "$path"`
-    * Calls `browser.visit`
+    * Calls `browser.url`
     * Example: `When I go to "/test"`
 * `I should see "$html" in the $element`
     * Calls `assert.contain`
@@ -160,7 +186,7 @@ Karma-Cukes provides basic step definitions to get you started:
     * `$element` can be a tag name or a CSS selector
     * Example: `And the title should be "Hello World"`
 
-## Reporter Screenshots
+## Formatters
 
 Karma-Cukes has 3 built-in reporters:
 
