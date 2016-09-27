@@ -14,8 +14,6 @@ var KarmaCukesPrettyReporter = require('./KarmaCukesPrettyReporter');
 var KarmaCukesProgressReporter = require('./KarmaCukesProgressReporter');
 
 var KarmaCukesPlugin = function(files, config) {
-    // fix v1.1.0 bug in BaseReporter.decoratorFactory.$inject
-    config.browserLogOptions = config.browserConsoleLogOptions;
     // inject client-side plugin dependencies
     files.unshift(
         { pattern: path.dirname(require.resolve('jquery')) + '/jquery.min.js', included: true, served: true },
