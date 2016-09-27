@@ -1,13 +1,13 @@
 /**
  * Karma Listener listening for CucumberJS events
- * 
+ *
  * @author Benjamin Nowack <mail@bnowack.de>
- * 
+ *
  * @param {module:karma} karma - Karma
  * @returns {KarmaCukesListener}
  */
 var KarmaCukesListener = function(karma) {
-    
+
     /**
      * Initialises the listener
      */
@@ -20,12 +20,12 @@ var KarmaCukesListener = function(karma) {
         // don't let errors cause Karma to exit
         window.onerror = $.proxy(this.onError, this);
     };
-    
+
     /*
      * Registers event handlers for cucumber events
-     * 
+     *
      * Available events:
-     * 
+     *
      *  * BeforeFeatures
      *  * BeforeFeature
      *  * Background
@@ -38,8 +38,8 @@ var KarmaCukesListener = function(karma) {
      *  * AfterFeature
      *  * FeaturesResult
      *  * AfterFeatures
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      * @param {function} callback - Callback for cucumber's AST walker
      */
     this.hear = function (event, defaultTimeout, callback) {
@@ -50,11 +50,11 @@ var KarmaCukesListener = function(karma) {
         }
         callback();
     };
-    
+
     /**
      * Initializes the listener before any features are run
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      */
     this.onBeforeFeatures = function(event) {
         this.init();
@@ -62,8 +62,8 @@ var KarmaCukesListener = function(karma) {
 
     /**
      * Sets the current feature reference
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      */
     this.onBeforeFeature = function(event) {
         var feature = event.getPayload();
@@ -79,18 +79,18 @@ var KarmaCukesListener = function(karma) {
             })
         };
     };
-    
+
     /**
      * Sets the current scenario reference
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      */
     this.onBeforeScenario = function(event) {
         var scenario = event.getPayload();
         this.scenario = {
-            id: this.feature.id + ';' + scenario.getName().toLowerCase().replace(/\s+/g, '-'), 
+            id: this.feature.id + ';' + scenario.getName().toLowerCase().replace(/\s+/g, '-'),
             name: scenario.getName(),
-            line: scenario.getLine(), 
+            line: scenario.getLine(),
             keyword: 'Scenario',
             description: scenario.getDescription(),
             type: 'scenario',
@@ -100,11 +100,11 @@ var KarmaCukesListener = function(karma) {
             examples: []// does not seem to be fillable via CucumberJS as outlines are split into individual scenarios
         };
     };
-    
+
     /**
      * Sets the current step reference
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      */
     this.onBeforeStep = function(event) {
         var step = event.getPayload();
@@ -113,7 +113,7 @@ var KarmaCukesListener = function(karma) {
             name: step.getName(),
             line: step.getLine(),
             //hidden: step.isHidden(),
-            match: { 
+            match: {
                 location: step.getUri() + ':' + step.getLine()
             },
             result: {
@@ -123,11 +123,11 @@ var KarmaCukesListener = function(karma) {
             }
         };
     };
-    
+
     /**
      * Creates a step/spec result and passes it to karma (which passes it to registered reporters)
-     * 
-     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event 
+     *
+     * @param {module:cucumber/runtime/ast_tree_walker/event.js} event - Cucumber event
      */
     this.onStepResult = function(event) {
         var stepResult = event.getPayload();
@@ -172,7 +172,7 @@ var KarmaCukesListener = function(karma) {
                 ;
             }
         }
-        // attachments 
+        // attachments
         var attachments = stepResult.getAttachments();
         if (attachments && attachments.length) {
             karmaResult.step.embeddings = [];
@@ -191,7 +191,7 @@ var KarmaCukesListener = function(karma) {
         // pass result to all registered karma reporters
         this.karma.result(karmaResult);// triggers `reporter.onSpecComplete(browser, karmaResult)`
     };
-    
+
     /**
      * Cleans up object references
      */
@@ -201,10 +201,10 @@ var KarmaCukesListener = function(karma) {
         this.step = null;
         this.stepCount = 0;
     };
-    
+
     /**
      * Adds script errors to step's error message
-     * 
+     *
      * @param {string} message - Error message
      * @param {string} source - Error source/file
      * @param {number} line - Error line
@@ -215,15 +215,15 @@ var KarmaCukesListener = function(karma) {
         console.error(fullMessage);
         this.step.result.error_message += fullMessage + "\n";
     };
-    
+
     /**
      * Checks if a step is a hook
-     * 
+     *
      * @param {module:cucumber/step} step - Step object
      * @returns {boolean} TRUE for hooks, FALSE otherwise
      */
     this.isHook = function(step) {
         return step.getKeyword().match(/^(Before|After)/);
     };
-    
+
 };
