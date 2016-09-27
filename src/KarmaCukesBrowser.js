@@ -16,6 +16,7 @@ var KarmaCukesBrowser = function() {
         this.frame = null;
         this.window = null;
         this.base = '';
+        this.$ajax = null;
         this.initFrame();
     };
 
@@ -77,7 +78,7 @@ var KarmaCukesBrowser = function() {
             url = this.base + url;
         }
         return new Promise(function (resolve, reject) {
-            $.ajax({
+            self.$ajax = $.ajax({
                 url: url,
                 method: method || 'GET',
                 data: data || null,
@@ -131,6 +132,7 @@ var KarmaCukesBrowser = function() {
             this.frame = null;
             this.window = null;
             this.document = null;
+            this.$ajax = null;
         }
     };
 
