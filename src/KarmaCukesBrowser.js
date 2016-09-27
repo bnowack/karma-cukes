@@ -154,7 +154,9 @@ var KarmaCukesBrowser = function () {
                     .then(function () {
                         resolve(self.$ajax.status);
                     })
-                ;
+                    .catch(function() {
+                        resolve(self.$ajax.status);
+                    });
             }
         });
     };
@@ -178,7 +180,9 @@ var KarmaCukesBrowser = function () {
                     .then(function () {
                         resolve(self.$ajax.getResponseHeader(headerName));
                     })
-                ;
+                    .catch(function() {
+                        resolve(self.$ajax.status);
+                    });
             }
         });
     };
