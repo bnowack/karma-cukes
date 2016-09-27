@@ -60,6 +60,8 @@ var KarmaCukesBrowser = function () {
             self.frame.one('loaded', function () {
                 resolve();
             });
+            // clear AJAX object (=> reset header cache)
+            self.$ajax = null;
             // trigger load
             self.frame.attr('src', url);
         });
@@ -120,6 +122,63 @@ var KarmaCukesBrowser = function () {
                         reject();
                     }
                 }, 100);
+            }
+        });
+    };
+
+    /**
+     * Fetches the given URL (or the browser's current one) and stores the associated XHR object for later access
+     *
+     * @param url
+     * @returns {Promise}
+     */
+    this.fetchHeaders = function (url) {
+        return this.http(url || this.window.location.pathname, 'GET');
+    };
+
+    /**
+     * Returns the status code of the latest request
+     *
+     * Refreshes headers if not present
+     *
+     * @returns {Promise}
+     */
+    this.getStatusCode = function () {
+        var self = this;
+        return new Promise(function (resolve, reject) {
+            if (self.$ajax) {
+                resolve(self.$ajax.status);
+            } else {
+                self
+                    .fetchHeaders()
+                    .then(function () {
+                        resolve(self.$ajax.status);
+                    })
+                ;
+            }
+        });
+    };
+
+    /**
+     * Returns a response header of the latest request
+     *
+     * Refreshes headers if not present
+     *
+     * @param {string} headerName
+     * @returns {Promise}
+     */
+    this.getResponseHeader = function (headerName) {
+        var self = this;
+        return new Promise(function (resolve, reject) {
+            if (self.$ajax) {
+                resolve(self.$ajax.getResponseHeader(headerName));
+            } else {
+                self
+                    .fetchHeaders()
+                    .then(function () {
+                        resolve(self.$ajax.getResponseHeader(headerName));
+                    })
+                ;
             }
         });
     };

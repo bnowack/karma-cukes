@@ -1,6 +1,6 @@
 /**
  * Karma-Cukes Step Definitions
- * 
+ *
  * @author Benjamin Nowack <mail@bnowack.de>
  */
 
@@ -20,6 +20,27 @@ module.exports = function() {
         var $element = $(this.browser.document).find('html ' + element);
         var actual = $element.html();
         this.assert.equal(actual, expected, callback, actual + ' should be ' + expected);
+    });
+
+    this.Then('the response code should be "$code"', function (code, callback) {
+        var self = this;
+        this.browser
+            .getStatusCode()
+            .then(function (actualCode) {
+                var expectedCode = parseInt(code);
+                self.assert.equal(actualCode, expectedCode, callback, 'Code should be "' + expectedCode + '" (was "' + actualCode + '")');
+            })
+        ;
+    });
+
+    this.Then('the response header "$header" should match "$value"', function (header, value, callback) {
+        var self = this;
+        this.browser
+            .getResponseHeader(header)
+            .then(function (actualValue) {
+                self.assert.ok(actualValue.match(value), callback, 'Header should match "' + value + '" (was "' + actualValue + '")');
+            })
+        ;
     });
 
 };
