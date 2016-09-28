@@ -25,7 +25,9 @@ var KarmaCukesBrowser = function () {
      */
     this.initFrame = function () {
         var self = this;
+        $('body iframe#karma-cukes-browser').remove();
         this.frame = $('<iframe></iframe>')
+            .attr('id', 'karma-cukes-browser')
             .css({
                 position: 'fixed',
                 top: 0,
