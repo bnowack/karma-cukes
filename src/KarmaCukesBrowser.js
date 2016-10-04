@@ -17,7 +17,22 @@ var KarmaCukesBrowser = function () {
         this.window = null;
         this.base = '';
         this.$ajax = null;
+        this.hasShadowDom = this.detectShadowDom();
         this.initFrame();
+    };
+
+    /**
+     * Checks if `::shadow` selectors are supported
+     *
+     * @returns {boolean} TRUE if detected, FALSE otherwise
+     */
+    this.detectShadowDom = function () {
+        try {
+            document.querySelector('::shadow');
+            return true;
+        } catch (error) {
+            return false;
+        }
     };
 
     /**
@@ -103,6 +118,7 @@ var KarmaCukesBrowser = function () {
      */
     this.waitFor = function (selector, maxWaitTime) {
         var self = this;
+        selector = this.hasShadowDom ? selector : selector.replace(/::shadow/g, '');
         var resolved = function (resolve) {
             var matches = $(self.document).find(selector);
             if (matches.length) {
